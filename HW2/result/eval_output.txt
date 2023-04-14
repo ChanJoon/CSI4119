@@ -1,0 +1,17 @@
+g++ -std=c++11 -g -fopenmp -pthread  main.cc -o HTtest -lboost_system  -lboost_thread
+./HTtest 0 | tee result/base.txt
+TABLE_SIZE 10000000 init: 4000000 new: 4000000 NT: 16 additional_reads: 9 use_custom: 0
+baseline HT 0
+start filling
+init hash table took 11.7287 sec
+start test
+test 36000000 ops took 34.0959 sec
+sanity check PASSED: 
+./HTtest 1 | tee result/better.txt
+TABLE_SIZE 10000000 init: 4000000 new: 4000000 NT: 16 additional_reads: 9 use_custom: 1
+better HT 1
+start filling
+init hash table took 0.302472 sec
+start test
+test 36000000 ops took 1.40019 sec
+sanity check PASSED: 
