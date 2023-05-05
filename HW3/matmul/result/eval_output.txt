@@ -1,0 +1,17 @@
+g++ -std=c++11 -pthread -lpthread -fopenmp -O3 -Wl,--no-as-needed -march=znver2 -c src/matmul.cpp -o build/matmul.o
+g++ -std=c++11 -pthread -lpthread -fopenmp -O3 -Wl,--no-as-needed -march=znver2 -o matmul build/matmul.o build/driver.o
+./matmul /HW3_data/input.dat /HW3_data/output.dat | tee result/eval_output.txt
+=====================================
+         Matrix Multiplication       
+=====================================
+The size of Matrix: 2048
+=====================================
+
+Read input file(/HW3_data/input.dat)...
+Read output file(/HW3_data/output.dat)...
+
+Run your solution...
+
+matmul_optimal took 1.40166 sec
+Correct
+
