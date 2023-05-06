@@ -32,4 +32,4 @@
 *.app
 
 # Custom
-./best_sol/*
+best_sol/
