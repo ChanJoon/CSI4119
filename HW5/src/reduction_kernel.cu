@@ -185,81 +185,110 @@ void reduce_optimize(const int* const g_idata, int* const g_odata, const int* co
     //     }
     // }
 
-    // for(int i=0; i<3; ++i){
-    //     if(i==0) {
-    //         switch(threads/2) {
-    //             case 512:
-    //                 reduce7<512><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 256:
-    //                 reduce7<256><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 128:
-    //                 reduce7<128><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 64:
-    //                 reduce7<64><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 32:
-    //                 reduce7<32><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 16:
-    //                 reduce7<16><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 8:
-    //                 reduce7<8><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 4:
-    //                 reduce7<4><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 2:
-    //                 reduce7<2><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //             case 1:
-    //                 reduce7<1><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
-    //                 break;
-    //         }
-    //         const_cast<int &> (n) = blocks; // 4096
-    //         blocks = 2*remain; // 8
-    //     }
-    //     else {
-    //         switch(threads/2) {
-    //             case 512:
-    //                 reduce7<512><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 256:
-    //                 reduce7<256><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 128:
-    //                 reduce7<128><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 64:
-    //                 reduce7<64><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 32:
-    //                 reduce7<32><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 16:
-    //                 reduce7<16><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 8:
-    //                 reduce7<8><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 4:
-    //                 reduce7<4><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 2:
-    //                 reduce7<2><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //             case 1:
-    //                 reduce7<1><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
-    //                 break;
-    //         }
-    //         const_cast<int &> (n) = blocks; // 8
-    //         threads = blocks; // 8
-    //         blocks = 1;
-    //     }
-    // }
+// kenel 7
+    switch(threads/2) {
+        case 512:
+            reduce7<512><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 256:
+            reduce7<256><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 128:
+            reduce7<128><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 64:
+            reduce7<64><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 32:
+            reduce7<32><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 16:
+            reduce7<16><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 8:
+            reduce7<8><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 4:
+            reduce7<4><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 2:
+            reduce7<2><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+        case 1:
+            reduce7<1><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_idata, d_odata, n);
+            break;
+    }
+    const_cast<int &> (n) = blocks; // 4096
+    blocks = 2*remain; // 8
+
+    switch(threads/2) {
+        case 512:
+            reduce7<512><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 256:
+            reduce7<256><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 128:
+            reduce7<128><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 64:
+            reduce7<64><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 32:
+            reduce7<32><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 16:
+            reduce7<16><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 8:
+            reduce7<8><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 4:
+            reduce7<4><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 2:
+            reduce7<2><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 1:
+            reduce7<1><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+    }
+    const_cast<int &> (n) = blocks; // 8
+    threads = blocks; // 8
+    blocks = 1;
+    
+    switch(threads/2) {
+        case 512:
+            reduce7<512><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 256:
+            reduce7<256><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 128:
+            reduce7<128><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 64:
+            reduce7<64><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 32:
+            reduce7<32><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 16:
+            reduce7<16><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 8:
+            reduce7<8><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 4:
+            reduce7<4><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 2:
+            reduce7<2><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+        case 1:
+            reduce7<1><<<blocks, threads/2, threads/2*sizeof(int)>>>((int *)d_odata, d_odata, n);
+            break;
+    }
 }
 
 // Interleaved Addressing with divergent branches
